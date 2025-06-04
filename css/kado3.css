@@ -1,0 +1,231 @@
+/* css/kado3.css */
+
+:root {
+    --kado3-bg: #2c1e3e; 
+    --kado3-text-light: #f0e6ff;
+    --kado3-text-accent: #e1c0ff; 
+    --kado3-player-bg: rgba(0,0,0,0.25); /* Sedikit lebih gelap untuk kontras video */
+    --kado3-controls-bg: rgba(0,0,0,0.4);
+    --kado3-progress-bg: rgba(255,255,255,0.2);
+    --kado3-progress-fill: var(--kado3-text-accent);
+    --kado3-button-icon-color: var(--kado3-text-light);
+    --kado3-button-icon-hover: var(--kado3-text-accent);
+    --kado3-final-button-bg: rgba(225, 193, 255, 0.15); /* Tombol replay/selesai */
+    --kado3-final-button-hover: rgba(225, 193, 255, 0.3);
+}
+
+body, html {
+    margin: 0; padding: 0; width: 100%; height: 100%;
+    font-family: 'Merriweather', serif; 
+    background-color: var(--kado3-bg);
+    color: var(--kado3-text-light);
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.kado-container {
+    text-align: center;
+    max-width: 800px;
+    width: 95%;
+    display: flex; /* Untuk mengatur item di dalamnya */
+    flex-direction: column;
+    align-items: center;
+}
+
+.initial-message {
+    font-size: 1.6em;
+    font-style: italic;
+    margin-bottom: 30px; /* Jarak ke video player */
+    line-height: 1.6;
+    opacity: 0; 
+}
+
+.video-player-container {
+    background-color: var(--kado3-player-bg);
+    padding: 10px; /* Padding lebih tipis karena kontrol di dalam */
+    border-radius: 12px; /* Radius lebih smooth */
+    box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+    margin-bottom: 30px;
+    width: 100%;
+    max-width: 720px; 
+    opacity: 0; 
+    position: relative; 
+}
+
+#videoSpesial {
+    width: 100%;
+    height: auto; 
+    max-height: 75vh; /* Bisa lebih tinggi jika ini fokus utama */
+    display: block;
+    border-radius: 6px; /* Radius video di dalam kontainer */
+    background-color: #000; 
+}
+
+.custom-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px; /* Padding kontrol */
+    background-color: var(--kado3-controls-bg);
+    border-bottom-left-radius: 6px; /* Ikuti radius video */
+    border-bottom-right-radius: 6px;
+    position: absolute; 
+    bottom: 10px; /* Menempel di bawah video, sesuai padding container */
+    left: 10px;
+    right: 10px;
+    opacity: 0; 
+    transition: opacity 0.3s ease-in-out;
+    box-sizing: border-box;
+}
+
+.video-player-container:hover .custom-controls,
+.custom-controls.visible { 
+    opacity: 1;
+}
+
+.custom-controls button {
+    background: none; border: none;
+    color: var(--kado3-button-icon-color);
+    width: 38px; height: 38px; /* Ukuran tombol seragam */
+    cursor: pointer;
+    display: flex; justify-content: center; align-items: center;
+    padding: 0;
+    border-radius: 50%; /* Tombol bulat */
+    transition: background-color 0.2s;
+}
+.custom-controls button:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+.custom-controls button:hover svg {
+    fill: var(--kado3-button-icon-hover);
+}
+.custom-controls svg {
+    width: 22px; height: 22px; /* Ukuran ikon */
+    fill: currentColor;
+}
+
+.progress-bar-container {
+    flex-grow: 1; 
+    height: 10px; /* Progress bar lebih tebal */
+    background-color: var(--kado3-progress-bg);
+    border-radius: 5px;
+    margin: 0 12px; /* Jarak dari tombol play & durasi */
+    cursor: pointer;
+    overflow: hidden; 
+}
+.progress-bar {
+    width: 0%; 
+    height: 100%;
+    background-color: var(--kado3-progress-fill);
+    border-radius: 5px;
+    transition: width 0.05s linear; /* Transisi lebih cepat agar responsif saat seek */
+}
+
+#currentTime, #duration {
+    font-size: 0.85em;
+    margin: 0 5px;
+    min-width: 40px; 
+    text-align: center;
+    font-variant-numeric: tabular-nums; /* Agar angka tidak geser-geser */
+}
+
+.final-reveal {
+    opacity: 0; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px; /* Jarak setelah video/lirik disembunyikan */
+}
+
+#finalPhoto {
+    max-width: 90%; /* Bisa lebih besar jika ini fokus utama */
+    width: 450px; /* Lebar maksimal foto */
+    max-height: 60vh;
+    border-radius: 10px;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.45);
+    margin-bottom: 25px;
+    border: 4px solid white;
+    opacity: 0; transform: scale(0.85) translateY(10px); 
+}
+
+.final-caption {
+    font-size: 2.2em;
+    font-family: 'Great Vibes', cursive; 
+    color: var(--kado3-text-accent);
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+    opacity: 0; transform: translateY(20px); 
+    margin-bottom: 20px;
+}
+
+#replayButton { 
+    background-color: var(--kado3-final-button-bg);
+    color: var(--kado3-text-light);
+    padding: 10px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    font-family: 'Merriweather', serif;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+#replayButton:hover {
+    background-color: var(--kado3-final-button-hover);
+}
+
+/* Efek Muncul Bertahap */
+.animated-item {
+    opacity: 0;
+    /* Transisi akan dikontrol oleh JS atau kelas .visible */
+}
+.visible {
+    opacity: 1 !important; 
+    transform: none !important; 
+    transition: opacity 1s ease-out, transform 1s ease-out;
+}
+.video-player-container.visible { transition-delay: 0.3s; } /* Muncul lebih cepat */
+.final-reveal.visible { transition-delay: 0s; } /* Kontainer final reveal muncul langsung */
+.final-reveal #finalPhoto.visible { 
+    transition: opacity 0.8s ease-out 0.2s, transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s; /* Efek bounce */
+    opacity: 1; transform: scale(1) translateY(0); 
+}
+.final-reveal .final-caption.visible { 
+    transition: opacity 0.8s ease-out 0.7s, transform 0.8s ease-out 0.7s;
+    opacity: 1; transform: translateY(0); 
+}
+#replayButton.visible {
+    transition: opacity 0.6s ease-out 1.2s;
+    opacity: 1;
+}
+
+.hidden { display: none !important; }
+
+@media (max-width: 768px) {
+    .initial-message { font-size: 1.3em; margin-bottom: 25px;}
+    .video-player-container { padding: 8px; max-width: 95%; }
+    #videoSpesial { max-height: 65vh; }
+    .custom-controls { padding: 6px 8px; bottom: 8px; left: 8px; right: 8px; }
+    .custom-controls button { width: 32px; height: 32px; }
+    .custom-controls svg { width: 18px; height: 18px; }
+    .progress-bar-container { height: 8px; margin: 0 10px; }
+    #currentTime, #duration { font-size: 0.75em; min-width: 30px; }
+    #finalPhoto { width: 80%; max-height: 50vh; border-width: 3px; }
+    .final-caption { font-size: 1.8em; }
+    #replayButton { padding: 8px 18px; font-size: 0.9em;}
+}
+
+@media (max-width: 480px) { /* Penyesuaian lebih lanjut untuk layar HP kecil */
+    .initial-message { font-size: 1.1em; margin-bottom: 20px; }
+    .video-player-container { padding: 5px; }
+    .custom-controls { padding: 5px; bottom: 5px; left: 5px; right: 5px; }
+    .custom-controls button { width: 30px; height: 30px; }
+    .custom-controls svg { width: 16px; height: 16px; }
+    .progress-bar-container { height: 6px; margin: 0 8px; }
+    #currentTime, #duration { display: none; } /* Sembunyikan waktu jika terlalu sempit */
+    #finalPhoto { width: 90%; max-height: 45vh; }
+    .final-caption { font-size: 1.5em; }
+}

@@ -1,0 +1,467 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500;700&family=Great+Vibes&display=swap');
+
+:root {
+    /* Define elegant purple shades and neutral colors */
+    --purple-dark: #4B0082;     /* Deep indigo */
+    --purple-main: #6A0DAD;     /* Vibrant purple */
+    --purple-light: #E0BBE4;    /* Lavender mist */
+    --purple-lighter: #F3E0FF;  /* Pale lavender */
+    --text-dark: #333333;       /* Dark grey for text */
+    --text-light: #FFFFFF;      /* White text */
+    --envelope-color: #FFFFFF;  /* White for envelope body */
+    --error-red: #E74C3C;       /* Red for error states */
+    --pink-seal: #FF69B4;       /* Hot pink for heart seal */
+    --transition-duration: 0.5s; /* Standard transition time for envelope flap */
+    --animation-duration-fast: 0.3s;
+    --animation-duration-medium: 0.5s;
+    --animation-duration-slow: 0.8s;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif; /* Default sans-serif font */
+    background: linear-gradient(135deg, var(--purple-light) 0%, var(--purple-lighter) 100%); /* Soft gradient background */
+    color: var(--text-dark);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden; /* Prevents scrollbars from appearing during animations */
+    position: relative; /* For positioning background effects */
+    user-select: none; /* Prevent text selection on the page */
+}
+
+/* Background Effects - Decorative animated elements */
+.background-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0; /* Behind main content */
+    background: radial-gradient(circle at top left, var(--purple-light) 5%, transparent 20%),
+                radial-gradient(circle at bottom right, var(--purple-main) 5%, transparent 20%);
+    animation: backgroundPulse 10s infinite alternate ease-in-out;
+}
+
+@keyframes backgroundPulse {
+    from { background-position: 0% 0%, 100% 100%; }
+    to { background-position: 100% 100%, 0% 0%; }
+}
+
+.background-effect::before,
+.background-effect::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /* Subtle SVG particles for a magical feel */
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="5" fill="%23FFFFFF" opacity="0.6"/><circle cx="20" cy="80" r="3" fill="%23dcd0ff" opacity="0.5"/><circle cx="70" cy="30" r="4" fill="%23f3e0ff" opacity="0.7"/></svg>') repeat;
+    background-size: 50px 50px;
+    animation: particleMovement 20s linear infinite;
+    opacity: 0.3;
+    pointer-events: none; /* Particles don't interfere with interaction */
+}
+
+.background-effect::after {
+    animation-delay: -10s; /* Offset animation for variation */
+    background-size: 70px 70px;
+    opacity: 0.2;
+}
+
+@keyframes particleMovement {
+    from { transform: translate(0, 0); }
+    to { transform: translate(100px, 100px); }
+}
+
+/* Main Content Container */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1; /* Above background effects */
+    padding: 20px;
+    max-width: 90%; /* Responsive width */
+    width: 320px; /* Fixed width for better control on small screens */
+}
+
+/* Introductory Text Styling */
+.intro-text {
+    font-family: 'Playfair Display', serif; /* Elegant serif font */
+    font-size: 1.8em;
+    color: var(--purple-dark);
+    margin: 5px 0 10px; /* Provides some spacing */
+    opacity: 0; /* Initially hidden, animated in by JS */
+    transform: translateY(20px); /* Starting position for fadeInUp animation */
+    text-align: center;
+    /* Transitions for smooth hiding when .fade-out-collapse is added */
+    transition: opacity var(--animation-duration-medium) ease-out,
+                transform var(--animation-duration-medium) ease-out,
+                height var(--animation-duration-medium) ease-out,
+                margin var(--animation-duration-medium) ease-out,
+                padding var(--animation-duration-medium) ease-out;
+}
+
+/* Class added by JS to hide and collapse intro text */
+.intro-text.fade-out-collapse {
+    opacity: 0;
+    transform: translateY(-20px); /* Animate upwards as it fades */
+    height: 0; /* Collapse height */
+    margin: 0 !important; /* Remove margins */
+    padding: 0 !important; /* Remove paddings */
+    overflow: hidden; /* Prevent content from showing during collapse */
+}
+
+/* Envelope Wrapper - Styles the container for the envelope and letter */
+.envelope-wrapper {
+    position: relative;
+    width: 300px;
+    height: 200px;
+    margin: 20px auto 25px; /* Adjusted margin */
+    border-radius: 10px;
+    transform-style: preserve-3d; /* For 3D transformations of flaps */
+    perspective: 1000px; /* Depth for 3D effect */
+    transform: rotateX(5deg) rotateY(0deg); /* Slight initial tilt */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25); /* Soft shadow */
+    transition: transform var(--animation-duration-fast) ease, box-shadow var(--animation-duration-fast) ease;
+}
+
+/* Error state for envelope (turns red) */
+.envelope-wrapper.error .envelope-body,
+.envelope-wrapper.error .envelope-flap-bottom,
+.envelope-wrapper.error .envelope-flap-top,
+.envelope-wrapper.error .envelope-heart-seal {
+    background-color: var(--error-red) !important; /* Important to override specific flap colors */
+    transition: background-color var(--animation-duration-fast) ease;
+}
+
+/* Shake animation for error state */
+.envelope-wrapper.shake {
+    animation: shake var(--animation-duration-fast) ease-in-out;
+}
+
+/* Envelope Parts - Main body, flaps */
+.envelope-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px; /* Consistent rounding */
+}
+
+.envelope-body {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: var(--envelope-color);
+    border-radius: 10px;
+    z-index: 1;
+}
+
+.envelope-flap-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--envelope-color); /* Should match body */
+    z-index: 2; /* Above body, below top flap */
+    clip-path: polygon(0% 100%, 100% 100%, 50% 50%); /* Triangular bottom flap */
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.envelope-flap-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--purple-main); /* Colored top flap */
+    z-index: 3; /* Above bottom flap, initially covers letter */
+    clip-path: polygon(0% 0%, 100% 0%, 50% 70%); /* Triangular top flap shape */
+    transform-origin: top; /* Rotate from the top edge */
+    transition: transform var(--transition-duration) ease-in-out, background-color var(--animation-duration-fast) ease;
+    transform: rotateX(0deg) translateZ(5px); /* Initial state, slightly raised */
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+/* Heart Seal on the Envelope */
+.envelope-heart-seal {
+    position: absolute;
+    top: 130px; /* Positioned over the flap join */
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg); /* Centered and rotated */
+    width: 35px;
+    height: 35px;
+    background-color: var(--pink-seal);
+    border-radius: 5px; /* Base for heart shape */
+    z-index: 4; /* Above top flap */
+    transition: background-color var(--animation-duration-fast) ease,
+                transform var(--animation-duration-fast) ease,
+                opacity var(--animation-duration-fast) ease;
+}
+
+.envelope-heart-seal::before,
+.envelope-heart-seal::after {
+    content: '';
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    background-color: var(--pink-seal); /* Match seal color */
+    border-radius: 50%; /* Circles to form heart lobes */
+}
+
+.envelope-heart-seal::before { top: -17.5px; left: 0; }
+.envelope-heart-seal::after { top: 0; left: 17.5px; }
+
+/* Envelope Open State - Applied by JS */
+.envelope-wrapper.open .envelope-flap-top {
+    transform: rotateX(180deg) translateZ(0px); /* Flap opens fully */
+    background-color: var(--purple-dark); /* Flap color changes when open (underside) */
+    z-index: 0; /* Goes behind the letter when open */
+}
+
+.envelope-wrapper.open .envelope-heart-seal {
+    opacity: 0; /* Seal fades out */
+    transform: translate(-50%, -50%) scale(0.5); /* Seal shrinks and fades */
+}
+
+/* Letter Content Styling */
+.letter-content {
+    position: absolute;
+    top: 50%; /* Centered in envelope initially */
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1); /* Start at normal size */
+    z-index: 0; /* Initially behind flap, JS will bring it to front (z-index: 5) */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: calc(100% - 40px); /* Slightly smaller than envelope */
+    max-width: 260px;
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    opacity: 0; /* Initially hidden */
+    /* Animation for letter emerging */
+    transition: transform var(--animation-duration-slow) cubic-bezier(0.68, -0.55, 0.27, 1.55),
+                opacity var(--animation-duration-medium) ease-out;
+}
+
+/* Class added by JS to show the letter */
+.envelope-wrapper.show-letter .letter-content {
+    opacity: 1; /* Make letter visible */
+    /* transform: translate(-50%, -50%) scale(1); /* Ensures it's at final position, though initial transform is already this */
+    /* z-index is set by JS to 5 */
+}
+
+.letter-title {
+    font-family: 'Great Vibes', cursive; /* Romantic script font */
+    font-size: 2.2em; /* Large title */
+    color: var(--purple-main);
+    margin: 0 0 10px; /* Adjusted margin */
+}
+
+.letter-message {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1em; /* Adjusted for better fit */
+    color: var(--text-dark);
+    line-height: 1.6; /* Improved readability */
+    margin: 0 0 15px; /* Adjusted margin */
+    white-space: pre-line; /* Respects line breaks in the HTML */
+}
+
+.letter-signature {
+    font-family: 'Great Vibes', cursive;
+    font-size: 1.4em;
+    color: var(--purple-dark);
+    margin-top: 10px; /* Spacing above signature */
+}
+
+/* Input Area for Name */
+.input-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15px; /* Reduced margin */
+    width: 100%;
+    max-width: 300px;
+    opacity: 0; /* Initially hidden, animated in by JS */
+    transform: translateY(20px); /* Starting position for fadeInUp animation */
+    /* Transitions for smooth hiding when .form-collapse-hide is added */
+    transition: opacity var(--animation-duration-medium) ease-out,
+                transform var(--animation-duration-medium) ease-out,
+                height var(--animation-duration-medium) ease-out,
+                margin var(--animation-duration-medium) ease-out,
+                padding var(--animation-duration-medium) ease-out,
+                visibility 0s var(--animation-duration-medium); /* Delay visibility change until after animation */
+}
+
+/* Class added by JS to hide and collapse the form */
+.input-area.form-collapse-hide {
+    opacity: 0;
+    transform: translateY(20px); /* Animate downwards as it fades */
+    height: 0 !important; /* Collapse height */
+    margin: 0 !important; /* Remove margins */
+    padding: 0 !important; /* Remove paddings */
+    overflow: hidden; /* Prevent content from showing during collapse */
+    visibility: hidden; /* Remove from layout and accessibility tree after transition */
+}
+
+
+.question-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1em;
+    color: var(--purple-dark);
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+#nameInput {
+    width: calc(100% - 44px); /* padding 20px L/R + border 2px L/R */
+    padding: 12px 20px;
+    margin-bottom: 15px;
+    border: 2px solid var(--purple-light);
+    border-radius: 8px;
+    font-size: 1em;
+    color: var(--text-dark);
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+    transition: border-color var(--animation-duration-fast) ease, box-shadow var(--animation-duration-fast) ease;
+    text-align: center;
+    outline: none; /* Remove default browser outline */
+}
+
+#nameInput::placeholder {
+    color: var(--text-dark);
+    opacity: 0.5; /* Standard way to make placeholder text lighter */
+}
+
+#nameInput:focus {
+    border-color: var(--purple-main);
+    /* Using --purple-main's color (#6A0DAD) for the shadow's accent */
+    box-shadow: 0 0 0 4px rgba(106, 13, 173, 0.1);
+}
+
+/* Submit Button ("Buka Amplop") Styling */
+#submitBtn {
+    background-color: var(--purple-main);
+    color: var(--text-light);
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    /* Using --purple-main's color (#6A0DAD) for the shadow */
+    box-shadow: 0 5px 15px rgba(106, 13, 173, 0.3);
+    width: 100%;
+    max-width: 200px;
+    opacity: 1; /* Ensure visible if not modified by JS */
+    display: block; /* Ensure it takes up width if needed */
+    visibility: visible; /* Ensure visible if not modified by JS */
+    transition: background-color var(--animation-duration-fast) ease,
+                transform var(--animation-duration-fast) ease,
+                box-shadow var(--animation-duration-fast) ease;
+}
+
+#submitBtn:hover:not(:disabled) { /* Only apply hover if not disabled */
+    background-color: var(--purple-dark);
+    transform: translateY(-2px); /* Slight lift on hover */
+    /* Using --purple-dark's color (#4B0082) for the shadow */
+    box-shadow: 0 7px 20px rgba(75, 0, 130, 0.4);
+}
+
+#submitBtn:active:not(:disabled) { /* Only apply active if not disabled */
+    transform: translateY(0); /* Reset lift on active */
+    box-shadow: 0 3px 10px rgba(106, 13, 173, 0.3); /* Smaller shadow on active */
+}
+
+#submitBtn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Error Message Styling */
+.error-message {
+    color: var(--error-red);
+    font-size: 0.9em;
+    margin-top: 10px;
+    height: 1.2em; /* Reserve space to prevent layout shift */
+    opacity: 0; /* Initially hidden */
+    transition: opacity var(--animation-duration-fast) ease;
+    text-align: center;
+}
+
+.error-message.show {
+    opacity: 1; /* Show error message */
+}
+
+/* Continue Button Styling */
+#continueBtn {
+    background-color: var(--purple-main);
+    color: var(--text-light);
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(106, 13, 173, 0.3); /* Using --purple-main's color */
+    margin-top: 20px;
+    width: 100%;
+    max-width: 200px;
+    text-align: center;
+    text-decoration: none; /* In case it's an <a> tag later */
+    opacity: 0; /* Initially hidden */
+    visibility: hidden; /* Initially hidden & not in layout */
+    transform: translateY(10px); /* Start slightly lower for pop-in effect */
+    transition: background-color var(--animation-duration-fast) ease,
+                transform var(--animation-duration-medium) ease, /* Smoother transform */
+                box-shadow var(--animation-duration-fast) ease,
+                opacity var(--animation-duration-medium) ease,
+                visibility 0s; /* visibility changes instantly when opacity is 0 or >0 */
+}
+
+/* Class added by JS to show the continue button */
+#continueBtn.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0); /* Move to final position */
+}
+
+#continueBtn:hover {
+    background-color: var(--purple-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 7px 20px rgba(75, 0, 130, 0.4); /* Using --purple-dark's color */
+}
+
+#continueBtn:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 10px rgba(106, 13, 173, 0.3); /* Using --purple-main's color */
+}
+
+
+/* General Purpose Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0) rotateX(5deg) rotateY(0deg); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px) rotateX(5deg) rotateY(0deg); }
+    20%, 40%, 60%, 80% { transform: translateX(5px) rotateX(5deg) rotateY(0deg); }
+}

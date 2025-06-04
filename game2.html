@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temukan Kenangan</title>
+    <link rel="stylesheet" href="css/game2.css">
+</head>
+<body>
+    <div class="game-container" id="memoryGameContainer">
+        <div class="game-header">
+            <h1 id="gameTitle">Setiap kenangan punya tempatnya.</h1>
+            <p id="gameSubtitle">Temukan mereka kembali.</p>
+            <div class="game-info">
+                <p>Skor: <span id="score">0</span></p>
+                <p>Percobaan: <span id="attempts">0</span></p>
+            </div>
+        </div>
+
+        <div class="game-board" id="gameBoard">
+            <!-- Kartu-kartu akan dibuat oleh JavaScript di sini -->
+        </div>
+
+        <div class="game-footer">
+            <button id="resetButton" class="hidden">Ulangi Permainan</button>
+            <button id="nextButtonGame2" class="hidden">Kenangan adalah jembatan menuju hati… ayo lihat lebih banyak.</button>
+        </div>
+    </div>
+
+    <!-- Opsional: Suara untuk flip kartu, match, dll. -->
+    <audio id="flipSound" src="assets/sounds/card_flip.mp3"></audio> 
+    <!-- <audio id="matchSound" src="assets/sounds/card_match.mp3"></audio> -->
+    <audio id="winSound" src="assets/sounds/game_win.mp3"></audio> 
+
+    <script src="js/game2.js"></script>
+</body>
+</html>

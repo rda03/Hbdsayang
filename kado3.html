@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spesial Untukmu...</title>
+    <link rel="stylesheet" href="css/kado3.css">
+</head>
+<body>
+    <div class="kado-container" id="finalKadoContainer">
+        <div class="initial-message animated-item" id="initialMessageKado3">
+            <p>"Aku ciptakan lagu ini untukmu.... Meski ada kekurangan, lagu ini adalah bentuk tulus dari perasaanku padamu."</p>
+        </div>
+
+        <div class="video-player-container hidden animated-item" id="videoPlayerContainer">
+            <!-- Ganti 'assets/songs/video_spesial.mp4' dengan path dan nama file video Anda -->
+            <!-- Tambahkan atribut controls jika ingin kontrol video default browser muncul -->
+            <video id="videoSpesial" src="assets/songs/video_spesial.mp4" preload="metadata"></video>
+            
+            <div class="custom-controls hidden" id="customControls">
+                <button id="playPauseVideoButton" aria-label="Putar atau Jeda Video">
+                    <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    <svg class="pause-icon hidden" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                </button>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="videoProgressBar"></div>
+                </div>
+                <span id="currentTime">0:00</span> / <span id="duration">0:00</span>
+                <button id="fullscreenButton" aria-label="Layar Penuh">
+                    <svg viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zm-3-12V5h3v2h-3v3h-2z"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Jika video Anda TIDAK ADA LIRIK dan Anda masih ingin menampilkan lirik terpisah, -->
+        <!-- maka bagian .lyrics-container bisa tetap ada. Untuk sekarang, saya asumsikan fokus pada video. -->
+        <!-- 
+        <div class="lyrics-container hidden animated-item" id="lyricsContainer">
+            <div id="lyricsDisplay"></div>
+        </div>
+        -->
+
+        <div class="final-reveal hidden" id="finalRevealArea">
+            <img src="assets/images/foto_akhir_placeholder.jpg" alt="Foto Akhir Kita" id="finalPhoto" class="animated-item">
+            <!-- Tombol untuk mengulang video atau ke halaman "terima kasih" -->
+            <button id="replayButton" class="hidden">Putar Ulang Video</button>
+        </div>
+    </div>
+
+    <script src="js/kado3.js"></script>
+</body>
+</html>

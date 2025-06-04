@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satu Pertanyaan Lagi...</title>
+    <link rel="stylesheet" href="css/game3.css">
+</head>
+<body>
+    <!-- Wrapper utama untuk background dan layout keseluruhan -->
+    <div class="game-container-wrapper">
+
+        <!-- Efek background untuk state cerah -->
+        <div class="decorative-background-effects"></div>
+
+        <!-- Kontainer untuk animasi bintang naik -->
+        <div class="stars-background" id="starsBackground"></div>
+
+        <!-- Kontainer utama untuk UI Game -->
+        <div class="game-container" id="interactiveGameContainer">
+            <div class="game-header">
+                <h1 id="gameTitle">Kalau kamu sudah sampai sejauh ini...</h1>
+                <p id="gameSubtitle">Tinggal jawab ini aja kok!</p>
+            </div>
+
+            <div class="question-wrapper animated-item" id="questionWrapper">
+                <p class="question-text" id="questionText"></p>
+                <div class="options-container">
+                    <button class="option-button yes-button" id="yesButton">Ya</button>
+                    <button class="option-button no-button" id="noButton">Tidak</button>
+                </div>
+                <p class="feedback-text" id="feedbackText"></p>
+            </div>
+
+            <div class="game-result hidden animated-item" id="gameResultArea">
+                <p id="resultMessageGame3">Sesuatu yang paling dekat dengan hatiku… sekarang untukmu.</p>
+                <button id="nextButtonGame3">Lihat Kado Terakhir!</button>
+            </div>
+        </div> <!-- Akhir dari .game-container -->
+
+    </div> <!-- Akhir dari .game-container-wrapper -->
+
+    <!-- Opsional: Suara saat tombol diklik atau kabur -->
+    <!-- <audio id="clickSound" src="assets/sounds/click.mp3"></audio> -->
+    <!-- <audio id="escapeSound" src="assets/sounds/whoosh_soft.mp3"></audio> -->
+
+    <script src="js/game3.js"></script>
+</body>
+</html>

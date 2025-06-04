@@ -1,0 +1,130 @@
+/* css/kado2.css */
+
+:root {
+    --kado2-bg: #f3e0f7; /* Lavender sangat pucat, sedikit berbeda dari kado1 */
+    --kado2-text-color: #5D3F6A; /* Ungu yang lebih soft */
+    --kado2-frame-bg: #ffffff;
+    --kado2-frame-shadow: rgba(93, 63, 106, 0.2);
+    --kado2-button-bg: #a079e0; /* Ungu muda dari kue */
+    --kado2-button-hover-bg: #8a63d2;
+    --kado2-button-text: #FFFFFF;
+}
+
+body, html {
+    margin: 0; padding: 0; width: 100%; min-height: 100%; /* min-height agar bisa scroll jika galeri panjang */
+    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif; /* Font klasik elegan */
+    background-color: var(--kado2-bg);
+    color: var(--kado2-text-color);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Mulai dari atas */
+    padding-top: 40px; /* Jarak dari atas viewport */
+    padding-bottom: 40px;
+    box-sizing: border-box;
+    overflow-y: auto; /* Izinkan scroll jika konten galeri panjang */
+}
+
+.kado-container {
+    text-align: center;
+    padding: 20px;
+    max-width: 900px;
+    width: 90%;
+}
+
+.ucapan-atas {
+    font-size: 1.8em;
+    font-style: italic;
+    margin-bottom: 40px;
+    line-height: 1.5;
+    color: var(--kado2-text-color);
+}
+
+.gallery-wrapper {
+    display: grid;
+    /* Contoh untuk 3 kolom, bisa disesuaikan dengan jumlah foto */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px; /* Jarak antar foto */
+    margin-bottom: 40px;
+    width: 100%;
+}
+
+.gallery-item {
+    background-color: var(--kado2-frame-bg);
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 6px 18px var(--kado2-frame-shadow);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    overflow: hidden; /* Untuk memastikan gambar tidak keluar dari border-radius */
+}
+
+.gallery-item:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 12px 28px rgba(93, 63, 106, 0.3);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: auto; /* Menjaga rasio aspek gambar */
+    max-height: 300px; /* Batasi tinggi gambar agar tidak terlalu dominan per item */
+    object-fit: cover; /* Memastikan gambar mengisi area tanpa distorsi, mungkin memotong sedikit */
+    display: block;
+    border-radius: 4px; /* Sedikit lengkungan pada gambar di dalam frame */
+}
+
+.gallery-item .caption { /* Styling untuk caption foto jika ada */
+    font-size: 0.9em;
+    margin-top: 8px;
+    color: #777;
+    font-style: italic;
+}
+
+#nextButtonKado2 {
+    background-color: var(--kado2-button-bg);
+    color: var(--kado2-button-text);
+    padding: 14px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    margin-top: 20px;
+}
+
+#nextButtonKado2:hover {
+    background-color: var(--kado2-button-hover-bg);
+    transform: translateY(-2px);
+}
+
+/* Efek Muncul Sederhana */
+.animated-item {
+    opacity: 0;
+    transform: translateY(30px); /* Mulai sedikit lebih bawah */
+}
+.visible { /* Kelas ditambahkan oleh JS */
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.9s ease-out, transform 0.9s ease-out;
+}
+.hidden { display: none !important; }
+
+/* Responsivitas Galeri */
+@media (max-width: 768px) {
+    .gallery-wrapper {
+        /* Untuk 2 kolom di tablet */
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+    }
+    .ucapan-atas { font-size: 1.5em; margin-bottom: 30px; }
+}
+
+@media (max-width: 500px) {
+    .gallery-wrapper {
+        /* Untuk 1 kolom di HP */
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .ucapan-atas { font-size: 1.3em; }
+    #nextButtonKado2 { width: 80%; padding: 12px 20px; font-size: 1em; }
+}

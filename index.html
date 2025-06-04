@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surat Spesial Untukmu</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="preload" href="opening.html" as="document">
+    <link rel="preload" href="css/opening.css" as="style">
+    <link rel="preload" href="js/opening.js" as="script">
+</head>
+<body>
+    <div class="background-effect"></div>
+
+    <div class="main-content">
+        <p class="intro-text fade-in-up delay-0">Sebelum semuanya dimulai,</p>
+        <p class="intro-text fade-in-up delay-1">satu hal kecil...</p>
+
+        <div class="envelope-wrapper">
+            <div class="envelope-container" id="envelopeContainer">
+                <div class="envelope-body"></div> <div class="envelope-flap-bottom"></div> <div class="envelope-flap-top" id="envelopeFlap"></div> <div class="envelope-heart-seal" id="envelopeHeartSeal"></div> <div class="letter-content" id="letterContent">
+                    <h2 class="letter-title">Untuk Tika-ku Tercinta,</h2>
+                    <p class="letter-message">Di setiap detak jantung, ada namamu terukir indah.<br>Di setiap hembusan doa, ada kebahagiaanmu yang terucap.<br>Ini adalah awal dari kisah yang takkan pernah pudar.</p>
+                    <p class="letter-signature">Dengan segenap cinta,</p>
+                    <p class="letter-signature">Aku.</p>
+                </div>
+            </div>
+        </div>
+
+        <form id="nameForm" class="input-area fade-in-up delay-2">
+            <p class="question-text">Siapa namamu?</p>
+            <input type="text" id="nameInput" placeholder="Masukkan nama di sini" autocomplete="off" required>
+            <button type="submit" id="submitBtn">Buka Amplop</button>
+            <p id="errorMessage" class="error-message"></p>
+        </form>
+
+        <button id="continueBtn" class="continue-button hidden">Lanjutkan Kejutan</button>
+    </div>
+
+    <script src="js/index.js"></script>
+</body>
+</html>
+

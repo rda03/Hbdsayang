@@ -1,0 +1,331 @@
+/* css/game1.css */
+
+/* Variabel Warna (Dari CSS Anda) */
+:root {
+    --game1-bright-bg-light: #E0BBE4;
+    --game1-bright-bg-lighter: #F3E0FF;
+    --game1-bright-pulse-accent: #6A0DAD;
+    --game1-bright-text: #4B0082;
+    --game1-bright-highlight-text: #FFFFFF;
+    --game1-bright-highlight-bg: #6A0DAD;
+    --game1-bright-button-bg: #6A0DAD;
+    --game1-bright-button-text: #FFFFFF;
+    --game1-bright-button-hover-bg: #4B0082;
+
+    --game1-dark-bg-darkest: #1a0f24;
+    --game1-dark-bg-mid: #2a1a3e;
+    --game1-dark-bg-lighter: #4e2a8e;
+    --game1-dark-text: #e8e8ff;
+    --game1-dark-highlight-text: #f5eaff;
+    --game1-dark-highlight-bg: rgba(140, 90, 230, 0.6);
+    --game1-dark-button-bg: #b388eb;
+    --game1-dark-button-text: #2c1e42;
+    --game1-dark-button-hover-bg: #c7a4f0;
+
+    --transition-long: 1.5s;
+    --transition-short: 0.5s;
+    /* Variabel star-duration dan star-delay akan di-set oleh JS */
+}
+
+body, html {
+    margin: 0; padding: 0; width: 100%; height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden; display: flex; justify-content: center; align-items: center;
+    background-color: var(--game1-bright-bg-lighter); /* Fallback */
+}
+
+.game-container-wrapper {
+    position: relative; width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    justify-content: center; /* Memusatkan konten vertikal */
+    align-items: center;     /* Memusatkan konten horizontal */
+    overflow-y: auto; /* Izinkan scroll JIKA konten lebih tinggi dari viewport */
+    transition: background var(--transition-long) ease-in-out;
+    padding: 20px; /* Padding untuk jarak dari tepi layar */
+    box-sizing: border-box;
+}
+
+/* STATE 1: BACKGROUND CERAH */
+.background-initial {
+    background: linear-gradient(135deg, var(--game1-bright-bg-light) 0%, var(--game1-bright-bg-lighter) 100%);
+    color: var(--game1-bright-text);
+}
+.background-initial .instructions-and-results-container {
+    background-color: rgba(255, 255, 255, 0.7); /* Lebih terlihat di bg cerah */
+    border: 1px solid rgba(106, 13, 173, 0.25);
+    color: var(--game1-bright-text);
+}
+.background-initial .highlight {
+    color: var(--game1-bright-highlight-text);
+    background-color: var(--game1-bright-highlight-bg);
+}
+.background-initial #nextButtonGame1 {
+    background-color: var(--game1-bright-button-bg);
+    color: var(--game1-bright-button-text);
+}
+.background-initial #nextButtonGame1:hover {
+    background-color: var(--game1-bright-button-hover-bg);
+}
+
+.decorative-background-effects {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    overflow: hidden; z-index: 0; pointer-events: none;
+    background: radial-gradient(circle at 10% 20%, var(--game1-bright-bg-light) 5%, transparent 25%),
+                radial-gradient(circle at 90% 80%, var(--game1-bright-pulse-accent) 3%, transparent 20%);
+    animation: backgroundPulse 12s infinite alternate ease-in-out;
+    opacity: 0;
+    transition: opacity var(--transition-short) ease-in-out;
+}
+.background-initial .decorative-background-effects { opacity: 0.7; }
+
+@keyframes backgroundPulse {
+    from { background-position: 0% 0%, 100% 100%; filter: brightness(0.9); }
+    to { background-position: 100% 100%, 0% 0%; filter: brightness(1.1); }
+}
+
+.decorative-background-effects::before,
+.decorative-background-effects::after {
+    content: ''; position: absolute; width: 100%; height: 100%;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1.5" fill="%23FFFFFF" opacity="0.5"/><circle cx="20" cy="80" r="1" fill="%23E0BBE4" opacity="0.4"/><circle cx="70" cy="30" r="1.2" fill="%23F3E0FF" opacity="0.6"/></svg>') repeat;
+    background-size: 70px 70px; animation: particleMovement 30s linear infinite;
+    opacity: 0; transition: opacity var(--transition-short) ease-in-out;
+}
+.background-initial .decorative-background-effects::before { opacity: 0.3; }
+.background-initial .decorative-background-effects::after {
+    animation-delay: -15s; background-size: 90px 90px; opacity: 0.2;
+}
+@keyframes particleMovement {
+    from { transform: translate(0, 0); }
+    to { transform: translate(70px, 70px); }
+}
+
+/* STATE 2: BACKGROUND GELAP BERBINTANG */
+.background-dark-stars {
+    background: linear-gradient(135deg, var(--game1-dark-bg-lighter) 0%, var(--game1-dark-bg-mid) 70%, var(--game1-dark-bg-darkest) 100%);
+    color: var(--game1-dark-text);
+}
+.background-dark-stars .instructions-and-results-container {
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: var(--game1-dark-text);
+}
+.background-dark-stars .highlight {
+    color: var(--game1-dark-highlight-text);
+    background-color: var(--game1-dark-highlight-bg);
+}
+.background-dark-stars #nextButtonGame1 {
+    background-color: var(--game1-dark-button-bg);
+    color: var(--game1-dark-button-text);
+}
+.background-dark-stars #nextButtonGame1:hover {
+    background-color: var(--game1-dark-button-hover-bg);
+}
+
+.stars-background {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    overflow: hidden; z-index: 1; pointer-events: none;
+    opacity: 0; transition: opacity 1.5s ease-in-out 0.8s;
+}
+.background-dark-stars .stars-background.active { opacity: 1; }
+
+.star {
+    position: absolute; width: 2px; height: 7px;
+    background: linear-gradient(to top, rgba(255,255,255,0.1), rgba(255,255,255,0.9));
+    border-radius: 50%; opacity: 0;
+    animation-name: risingStar;
+    animation-duration: var(--star-duration);
+    animation-iteration-count: 1;
+    animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+    animation-fill-mode: forwards;
+    animation-delay: var(--star-delay);
+}
+@keyframes risingStar {
+    0% { transform: translateY(0) scale(0.6); opacity: 0; }
+    15% { opacity: 1; transform: translateY(-15vh) scale(1); }
+    85% { opacity: 0.7; }
+    100% { transform: translateY(-95vh); opacity: 0; }
+}
+
+/* === CSS KUE (Ini adalah kode CSS yang Anda berikan di prompt sebelumnya) === */
+.cake {
+    position: relative; 
+    width: 250px;
+    height: 200px;
+    /* margin-top: 5vh; Dihapus, biarkan flex wrapper yang atur */
+    margin-bottom: 25px; /* Jarak ke UI bawah, sesuaikan */
+    z-index: 10; 
+    flex-shrink: 0;
+}
+
+.plate {
+    width: 280px; height: 110px; position: absolute;
+    bottom: -10px; left: 50%; transform: translateX(-50%);
+    background-color: #d0d8e0; border-radius: 50%;
+    box-shadow: 0 2px #b8bec6, 0 4px #b8bec6, 0 5px 40px rgba(0,0,0,0.4);
+    z-index: 11;
+}
+
+.cake > *:not(.candle):not(.plate) {
+    position: absolute; left: 50%; transform: translateX(-50%);
+}
+.cake > .candle { /* Pastikan ini ada dan benar */
+    position: absolute; left: 50%; transform: translateX(-50%);
+}
+
+.layer { display: block; width: 250px; height: 100px; border-radius: 50%; z-index: 12; }
+
+.layer-bottom {
+    background-color: #603F8B;
+    box-shadow: 0 2px #6e4ca7,0 4px #533479,0 6px #513276,0 8px #4e3073,0 10px #4c2e70,0 12px #4a2c6d,0 14px #472a6a,0 16px #452867,0 18px #422664,0 20px #402461,0 22px #3d225e,0 24px #3b205b,0 26px #381e58,0 28px #361c55,0 30px #331a52;
+    top: 66px;
+}
+.layer-middle {
+    background-color: #7e55c3;
+    box-shadow: 0 2px #8f66d1,0 4px #6f48b0,0 6px #6c45ad,0 8px #6942aa, 0 30px #462a7e;
+    top: 33px; width: 240px;
+}
+.layer-top {
+    background-color: #a079e0;
+    box-shadow: 0 2px #b28df8,0 4px #936bd8,0 6px #9068d5,0 8px #8d65d2, 0 30px #5c3e8a;
+    top: 0px; width: 230px;
+}
+
+.icing {
+    top: 2px; width: 220px; height: 90px;
+    background-color: #f0e6ff; border-radius: 50%; z-index: 13;
+}
+.icing:before {
+    content: ""; position: absolute;
+    top: 4px; right: 5px; bottom: 6px; left: 5px;
+    background-color: #fbfaff;
+    box-shadow: 0 0 4px #fbfaff, 0 0 4px #fbfaff, 0 0 4px #fbfaff;
+    border-radius: 50%; z-index: 1;
+}
+
+.drip { display: block; background-color: #f0e6ff; z-index: 14; }
+.drip1 { top: 53px; left: calc(50% - 90px); width: 40px; height: 48px; border-radius:0 0 20px 20px; transform:translateX(-50%) skewY(15deg); }
+.drip2 { top: 69px; left: calc(50% + 70px); width: 50px; height: 60px; border-radius:0 0 25px 25px; transform:translateX(-50%) skewY(-15deg); }
+.drip3 { top: 54px; width: 80px; height: 65px; border-radius:0 0 40px 40px; /* Otomatis tengah karena parent sudah transform translateX(-50%) */ }
+
+.candle { /* Lilin untuk di-swipe */
+    background-color: #e6e6fa; width: 16px; height: 50px;
+    border-radius: 8px / 4px;
+    /* === PENTING SEKALI: SESUAIKAN 'top' INI AGAR PAS DI ATAS KUE === */
+    top: -35px; /* Nilai ini HARUS Anda sesuaikan berdasarkan visual kue Anda */
+    z-index: 30 !important; /* Pastikan di atas segalanya untuk swipe */
+    cursor: grab;
+    user-select: none; -webkit-user-drag: none;
+}
+.candle.swiping { cursor: grabbing; }
+.candle:before { /* Highlight pada lilin */
+    content: ""; position: absolute;
+    top: 0; left: 0; width: 16px; height: 8px;
+    border-radius: 50%; background-color: #f5f0ff;
+    z-index: 31; /* Di atas batang lilin */
+}
+
+.flame { /* Api untuk lilin */
+    position: absolute; background-color: #FFB74A;
+    width: 15px; height: 35px;
+    border-radius: 10px 10px 10px 10px / 25px 25px 10px 10px;
+    top: -34px; /* Di atas .candle */
+    left: 50%; transform: translateX(-50%);
+    z-index: 32 !important; /* Api di atas segalanya pada lilin */
+    box-shadow: 0 0 8px #FFB74A, 0 0 15px #FFA000aa, 0 0 25px #FF8C0088;
+    animation: flicker 0.7s infinite alternate ease-in-out;
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+.flame.out { /* Api padam */
+    opacity: 0 !important;
+    transform: translateX(-50%) translateY(15px) scale(0.4) !important;
+    animation: none !important; /* HENTIKAN ANIMASI FLICKER */
+}
+@keyframes flicker {
+    0%   { transform: translateX(-50%) scaleY(1) scaleX(1) rotate(-1deg); opacity: 0.95; }
+    25%  { transform: translateX(-50%) scaleY(1.05) scaleX(0.95) rotate(1deg); opacity: 0.85; }
+    50%  { transform: translateX(-50%) scaleY(0.95) scaleX(1.05) rotate(-2deg); opacity: 1; }
+    75%  { transform: translateX(-50%) scaleY(1.02) scaleX(0.98) rotate(2deg); opacity: 0.9; }
+    100% { transform: translateX(-50%) scaleY(1) scaleX(1) rotate(0deg); opacity: 0.95; }
+}
+
+/* UI STYLING (Dari CSS Anda) */
+.instructions-and-results-container {
+    text-align: center; padding: 20px; max-width: 90%; width: 500px; /* Lebar maks 500px */
+    border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+    position: relative; z-index: 10;
+    /* margin-top: 20px; Dihapus, biarkan flex wrapper yang atur jaraknya */
+    flex-shrink: 0;
+}
+.instructions { font-size: 1.15em; line-height: 1.5; margin-bottom: 15px; }
+.instructions p { margin: 5px 0; }
+.highlight { font-weight: bold; padding: 2px 5px; border-radius: 4px; }
+.result-message { padding: 15px; border-radius: 10px; margin-top: 15px; font-size: 1.2em; line-height: 1.5;}
+#nextButtonGame1 {
+    padding:12px 25px;border:none;border-radius:8px;font-size:1em;font-weight:bold;
+    cursor:pointer;margin-top:15px;transition:background-color .2s ease,transform .1s ease;
+    box-shadow:0 2px 4px rgba(0,0,0,0.2)
+}
+#nextButtonGame1:hover{transform:translateY(-1px)}
+#nextButtonGame1:active{transform:translateY(0px);box-shadow:0 1px 2px rgba(0,0,0,0.2)}
+.hidden{display:none !important}
+
+/* === MEDIA QUERIES UNTUK RESPONSIVITAS (Dari CSS Anda, dengan Penyesuaian Layout) === */
+@media (max-width: 600px) { /* HP Portrait */
+    .game-container-wrapper {
+        padding: 15px;
+        justify-content: center; /* Kembali ke center jika scroll mungkin aktif */
+    }
+    .cake {
+        width: 200px; height: 160px;
+        margin-top: 3vh; /* Jarak dari atas jika justify-content:center tidak cukup */
+        margin-bottom: 20px; /* Jarak ke UI bawah */
+    }
+    /* Sesuaikan SEMUA PROPERTI lapisan, icing, drip agar proporsional dengan ukuran .cake baru */
+    .plate { width: 220px; height: 90px; bottom: -8px; }
+    .layer { height: 80px; } /* Tinggi elips shadow */
+    .layer-bottom { top: 53px; } /* (160px / 3 lapisan = ~53.3px per lapisan) */
+    .layer-middle { top: 26px; }
+    /* .layer-top sudah top: 0px */
+    /* Ukuran width relatif pada layer, icing, drip akan otomatis menyesuaikan dengan .cake parent */
+
+    .icing { top: -5px; width: 88%; height: 80px; }
+    .drip1 { top: 40px; left: 18%; width: 15%; height: 40px; }
+    .drip2 { top: 50px; right: 15%; /* Menggunakan right untuk drip kanan */ left: auto; width: 18%; height: 50px; }
+    .drip3 { top: 42px; width: 30%; height: 55px; }
+
+
+    .candle { width: 14px; height: 45px; top: -30px; /* PENTING: SESUAIKAN LAGI DI LAYAR KECIL */ }
+    .flame { width: 14px; height: 28px; top: -27px; }
+
+    .instructions-and-results-container {
+        width: 90%; padding: 15px;
+        margin: 10px auto 3vh; /* Jarak atas, bawah, dan auto horizontal */
+    }
+    .instructions { font-size: 1em; }
+    .result-message { font-size: 1.1em; }
+    #nextButtonGame1 { padding: 10px 20px; font-size: 0.9em; }
+
+    .decorative-background-effects::before,
+    .decorative-background-effects::after { background-size: 50px 50px; }
+    .decorative-background-effects::after { background-size: 70px 70px; }
+}
+
+@media (max-height: 650px) { /* Penyesuaian untuk layar yang lebih pendek secara umum */
+    .game-container-wrapper {
+        padding-top: 2vh; padding-bottom: 2vh;
+        justify-content: center; /* Pastikan tetap tengah jika konten tidak terlalu tinggi */
+    }
+    .cake {
+        transform: scale(0.85); /* Kecilkan sedikit kue */
+        margin-top: 1vh; /* Kurangi margin atas saat dikecilkan */
+        margin-bottom: 10px;
+    }
+    .instructions-and-results-container {
+        transform: scale(0.9); /* Kecilkan UI juga */
+        margin-top: 5px; /* Kurangi margin atas */
+        padding: 10px;
+    }
+    .instructions { font-size: 0.95em; margin-bottom:10px; }
+    .result-message { font-size: 1em; margin-top:10px; }
+    #nextButtonGame1 { margin-top:10px; padding: 8px 18px; font-size: 0.85em; }
+}

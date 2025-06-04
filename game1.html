@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satu Permintaan...</title>
+    <link rel="stylesheet" href="css/game1.css">
+</head>
+<body>
+    <!-- Wadah utama untuk seluruh konten game -->
+    <div class="game-container-wrapper">
+
+        <!-- Kontainer untuk animasi bintang-bintang di latar belakang -->
+        <div class="stars-background" id="starsBackground">
+            <!-- Bintang-bintang akan dibuat oleh JavaScript di sini -->
+        </div>
+
+        <!-- Area untuk menampilkan Kue CSS dan Lilin -->
+        <div class="cake-area">
+            <!-- Struktur Kue dari Contoh (dengan ID untuk JS) -->
+            <div class="cake">
+                <div class="plate"></div>
+                <div class="layer layer-bottom"></div>
+                <div class="layer layer-middle"></div>
+                <div class="layer layer-top"></div>
+                <div class="icing"></div>
+                <!-- Lilin: ID="candle" agar bisa diakses JS -->
+                <div class="candle" id="candle">
+                    <!-- Api: ID="flame" agar bisa diakses JS -->
+                    <div class="flame" id="flame"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kontainer untuk Instruksi dan Pesan Hasil -->
+        <div class="instructions-and-results-container">
+            <div class="instructions">
+                <p id="initialGameText">Biasanya lilin ditiup... tapi kali ini, <span class="highlight">geser perlahan ke kanan</span> pada lilinnya.</p>
+                <p id="secondaryGameText">Satu permintaan sebelum melangkah...</p>
+            </div>
+
+            <div class="result-message hidden" id="resultMessage">
+                <p>Doamu telah dikirim ke bintang. Sekarang, lihat apa yang ada untukmu...</p>
+                <button id="nextButtonGame1" class="hidden">Lanjut ke Kado</button>
+            </div>
+        </div>
+
+    </div> <!-- Akhir dari game-container-wrapper -->
+<audio id="backgroundMusicLoop" loop>
+    <source src="assets/songs/backsound.mp3" type="audio/mpeg">
+    Browser Anda tidak mendukung elemen audio.
+</audio>
+    <script src="js/game1.js"></script>
+    <script src="js/auto-persistent-music.js"></script>
+</body>
+</html>

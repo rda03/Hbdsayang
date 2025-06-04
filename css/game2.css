@@ -1,0 +1,160 @@
+/* css/game2.css */
+
+:root {
+    --game2-bg: #e6e6fa; /* Lavender muda, konsisten dengan game1 */
+    --game2-text: #483d8b; /* Dark Slate Blue */
+    --game2-card-bg: #ffffff;
+    --game2-card-border: #c0c0ff; /* Ungu muda untuk border kartu */
+    --game2-card-back-bg: #9370DB; /* MediumPurple untuk belakang kartu */
+    --game2-button-bg: #8a2be2; /* BlueViolet */
+    --game2-button-hover-bg: #9932cc; /* MediumOrchid */
+    --game2-button-text: #FFFFFF;
+}
+
+body, html {
+    margin: 0; padding: 0; width: 100%; height: 100%;
+    font-family: 'Montserrat', sans-serif; /* Font yang bersih dan modern */
+    background-color: var(--game2-bg);
+    color: var(--game2-text);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: auto; /* Izinkan scroll jika konten game besar */
+}
+
+.game-container {
+    text-align: center;
+    padding: 20px;
+    max-width: 900px; /* Bisa lebih lebar untuk papan game */
+    width: 95%;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.game-header {
+    margin-bottom: 25px;
+}
+
+.game-header h1 {
+    font-family: 'Playfair Display', serif; /* Font elegan untuk judul */
+    font-size: 2em;
+    margin-bottom: 5px;
+    color: var(--game1-bright-text); /* Ambil dari variabel game1 jika sesuai */
+}
+
+.game-header p {
+    font-size: 1.1em;
+    margin-top: 0;
+    color: var(--game2-text);
+}
+
+.game-info {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 15px;
+    font-size: 1em;
+    font-weight: 500;
+}
+
+.game-board {
+    display: grid;
+    /* Kolom akan diatur oleh JS tergantung jumlah kartu, contoh untuk 4 kolom: */
+    /* grid-template-columns: repeat(4, 1fr); */
+    gap: 10px; /* Jarak antar kartu */
+    padding: 10px;
+    background-color: rgba(255,255,255,0.3);
+    border-radius: 10px;
+    max-width: 500px; /* Batasi lebar papan agar kartu tidak terlalu kecil */
+    margin: 0 auto; /* Pusatkan papan */
+}
+
+.card {
+    aspect-ratio: 1 / 1; /* Membuat kartu selalu persegi */
+    background-color: var(--game2-card-back-bg); /* Belakang kartu */
+    border: 2px solid var(--game2-card-border);
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px; /* Untuk efek flip 3D */
+    transition: transform 0.6s, background-color 0.3s;
+    transform-style: preserve-3d; /* Penting untuk flip */
+}
+
+.card img {
+    max-width: 80%;
+    max-height: 80%;
+    display: block;
+    opacity: 0; /* Awalnya gambar tidak terlihat */
+    transform: rotateY(180deg); /* Gambar terbalik agar muncul saat kartu diflip */
+    backface-visibility: hidden; /* Sembunyikan saat terbalik */
+}
+
+.card.flipped {
+    background-color: var(--game2-card-bg); /* Warna depan kartu */
+    transform: rotateY(180deg);
+}
+
+.card.flipped img {
+    opacity: 1; /* Tampilkan gambar saat kartu diflip */
+}
+
+.card.matched {
+    border-color: #4CAF50; /* Hijau untuk yang cocok */
+    background-color: #e6ffe6;
+    cursor: default;
+    /* transform: scale(0.95); /* Sedikit mengecil saat cocok */
+    /* opacity: 0.7; */
+}
+.card.matched img {
+    opacity: 1; /* Pastikan gambar tetap terlihat setelah match */
+}
+
+
+.game-footer {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.game-footer button {
+    background-color: var(--game2-button-bg);
+    color: var(--game2-button-text);
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    min-width: 200px;
+}
+
+.game-footer button:hover {
+    background-color: var(--game2-button-hover-bg);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Responsivitas Papan Game */
+@media (max-width: 700px) {
+    .game-board {
+        max-width: 400px; /* Papan lebih kecil */
+        gap: 8px;
+    }
+}
+@media (max-width: 450px) {
+    .game-header h1 { font-size: 1.6em; }
+    .game-header p { font-size: 1em; }
+    .game-board {
+        max-width: 100%; /* Papan mengisi lebar parent */
+        /* JS mungkin perlu mengatur ulang jumlah kolom di sini */
+    }
+    .card { border-width: 1px; }
+}

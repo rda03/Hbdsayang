@@ -1,0 +1,335 @@
+/* css/opening.css */
+
+/*-----------------------------------------------------------------------------
+  IMPORTS & GLOBAL STYLES
+-----------------------------------------------------------------------------*/
+
+/* 
+  Pertimbangkan untuk mengimpor font kustom dari Google Fonts jika Anda ingin
+  tampilan yang lebih unik dan elegan. Contoh:
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Great+Vibes&family=Montserrat:wght@400;500&display=swap');
+*/
+
+:root {
+    /* Variabel Warna Utama */
+    --primary-bg-color: #1a0033; /* Ungu sangat gelap (Night Sky) */
+    --primary-text-color: #f0e6f7; /* Lavender pucat untuk teks umum */
+    --highlight-text-color: #e1c0ff; /* Ungu muda cerah untuk judul utama */
+    --secondary-text-color: #d1b3e6; /* Ungu muda untuk teks pendukung */
+    --button-bg-color: #9d4edd; /* Ungu cerah untuk tombol */
+    --button-hover-bg-color: #c77dff; /* Warna hover tombol */
+    --shadow-color: rgba(0,0,0,0.6); /* Warna bayangan teks */
+
+    /* Variabel Ukuran & Spasi (opsional, bisa membantu konsistensi) */
+    --spacing-unit: 8px; /* Satuan dasar untuk margin/padding */
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box; /* Standar global untuk box-sizing */
+    margin: 0; /* Reset margin default */
+    padding: 0; /* Reset padding default */
+}
+
+html {
+    font-size: 16px; /* Ukuran font dasar, membantu unit 'rem' menjadi lebih intuitif (1rem = 16px) */
+    scroll-behavior: smooth; /* Jika ada navigasi internal, scroll jadi halus */
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    /* Ganti 'Arial' dengan font yang lebih sesuai dengan tema jika diinginkan */
+    font-family: 'Montserrat', 'Arial', sans-serif; /* Fallback font jika Montserrat tidak tersedia */
+    overflow: hidden; /* Mencegah scrollbar yang tidak diinginkan pada level body */
+    line-height: 1.5; /* Default line-height untuk keterbacaan */
+    color: var(--primary-text-color); /* Warna teks default dari variabel */
+    background-color: var(--primary-bg-color); /* Warna latar belakang utama */
+}
+
+/*-----------------------------------------------------------------------------
+  MAIN CONTAINER & LAYOUT
+-----------------------------------------------------------------------------*/
+
+.night-sky-container {
+    width: 100%;
+    height: 100%;
+    /* Background bisa dibuat lebih menarik dengan gradient jika diinginkan */
+    /* background: linear-gradient(to bottom, #0c001a, #1a0033); */
+    display: flex; /* Menggunakan flexbox untuk penataan konten */
+    flex-direction: column; /* Konten disusun secara vertikal */
+    justify-content: center; /* Konten ditengah secara vertikal */
+    align-items: center; /* Konten ditengah secara horizontal */
+    position: relative; /* Untuk positioning absolut elemen anak (seperti kembang api) */
+    text-align: center; /* Teks di dalam container ini akan rata tengah */
+    padding: calc(var(--spacing-unit) * 2.5); /* 20px padding, menggunakan variabel */
+    /* overflow: hidden; -- sudah di body, tapi bisa juga di sini jika perlu */
+}
+
+/*-----------------------------------------------------------------------------
+  FIREWORKS CONTAINER
+-----------------------------------------------------------------------------*/
+
+#fireworksContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Penting agar tidak menghalangi interaksi dengan elemen di bawahnya */
+    overflow: hidden; /* Mencegah kembang api "bocor" keluar area */
+    z-index: 1; /* Di bawah message-container */
+}
+
+/*-----------------------------------------------------------------------------
+  MESSAGE CONTENT CONTAINER & TEXT STYLES
+-----------------------------------------------------------------------------*/
+
+.message-container {
+    position: relative; /* Agar z-index berfungsi */
+    z-index: 10; /* Memastikan pesan berada di atas kembang api */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 90%; /* Menggunakan persentase agar responsif */
+    max-width: 700px; /* Batas maksimal lebar untuk layar besar agar teks tidak terlalu panjang */
+    padding: var(--spacing-unit); /* Sedikit padding internal */
+}
+
+/* Style untuk teks hint awal */
+#initialHint {
+    /* 
+      clamp(MIN, PREFERRED, MAX) untuk ukuran font responsif.
+      PREFERRED: 3vw (3% dari lebar viewport)
+      MIN: 1rem (16px, jika font-size html 16px)
+      MAX: 1.5rem (24px)
+    */
+    font-size: clamp(1rem, 3vw, 1.5rem);
+    margin-bottom: clamp(calc(var(--spacing-unit) * 2.5), 5vh, calc(var(--spacing-unit) * 5)); /* 20px, 5% tinggi viewport, 40px */
+    opacity: 0; /* Awalnya transparan untuk animasi fade-in */
+    line-height: 1.4; /* Untuk keterbacaan jika teks menjadi 2 baris */
+    font-weight: 400; /* Normal weight */
+    color: var(--primary-text-color);
+}
+
+/* Animasi fade-in umum */
+.fade-in-slow {
+    animation: fadeInAnimation 3s ease-in-out forwards;
+    animation-delay: 0.5s; /* Penundaan sebelum animasi dimulai */
+}
+
+/* Style untuk pesan ulang tahun utama */
+#birthdayMessage {
+    /* Ukuran font sangat penting, gunakan clamp untuk responsivitas maksimum */
+    font-size: clamp(2rem, 8vw, 4.5rem); /* Contoh: 32px, 8% lebar viewport, 72px */
+    font-weight: 700; /* Bold, atau bisa gunakan 'Playfair Display' dengan weight bold */
+    color: var(--highlight-text-color); /* Warna teks yang menonjol */
+    text-shadow: 2px 2px 8px var(--shadow-color); /* Bayangan teks untuk efek kedalaman */
+    margin-top: 0; /* Reset margin atas jika ada */
+    margin-bottom: clamp(calc(var(--spacing-unit) * 1.875), 3vh, calc(var(--spacing-unit) * 3.125)); /* 15px, 3% tinggi viewport, 25px */
+    line-height: 1.2; /* Penting jika teksnya menjadi beberapa baris di layar kecil */
+    word-wrap: break-word; /* Memaksa kata panjang untuk pecah jika perlu (legacy) */
+    overflow-wrap: break-word; /* Standar modern untuk word-wrap */
+    letter-spacing: 0.5px; /* Sedikit spasi antar huruf jika fontnya rapat */
+}
+
+/* Kelas untuk teks dengan font lebih elegan/berbeda */
+.elegant-text {
+    /* Ganti dengan font pilihan Anda */
+    font-family: 'Playfair Display', 'Georgia', 'Times New Roman', serif;
+    /* Jika menggunakan Great Vibes untuk sentuhan tulisan tangan: */
+    /* font-family: 'Great Vibes', cursive; */
+    /* font-size: clamp(2.5rem, 10vw, 5.5rem); /* Mungkin perlu ukuran berbeda jika font script */
+}
+
+/* Style untuk pesan langkah selanjutnya */
+#nextStepMessage {
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem); /* 14.4px, 2.5% lebar viewport, 17.6px */
+    margin-bottom: clamp(calc(var(--spacing-unit) * 2.5), 4vh, calc(var(--spacing-unit) * 3.75)); /* 20px, 4% tinggi viewport, 30px */
+    color: var(--secondary-text-color);
+    line-height: 1.5;
+    font-weight: 400;
+}
+
+/* Style untuk tombol "Lanjut" */
+#nextButton {
+    background-color: var(--button-bg-color);
+    color: white; /* Teks tombol putih agar kontras */
+    /* Padding responsif menggunakan clamp */
+    padding: clamp(calc(var(--spacing-unit) * 1.25), 2vh, calc(var(--spacing-unit) * 1.875)) /* Vertikal: 10px, 2% tinggi viewport, 15px */
+             clamp(calc(var(--spacing-unit) * 2.5), 5vw, calc(var(--spacing-unit) * 3.75)); /* Horizontal: 20px, 5% lebar viewport, 30px */
+    border: none; /* Tanpa border default */
+    border-radius: calc(var(--spacing-unit)); /* 8px border radius */
+    /* Ukuran font tombol responsif */
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    font-weight: 500; /* Sedikit lebih tebal dari teks normal */
+    text-transform: uppercase; /* Opsi: membuat teks tombol jadi kapital semua */
+    letter-spacing: 1px; /* Spasi antar huruf pada tombol */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Bayangan halus pada tombol */
+}
+
+#nextButton:hover,
+#nextButton:focus { /* Tambahkan :focus untuk aksesibilitas keyboard */
+    background-color: var(--button-hover-bg-color);
+    transform: scale(1.05); /* Sedikit membesar saat di-hover/focus */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3); /* Bayangan lebih jelas saat hover */
+    outline: none; /* Hapus outline default saat focus jika sudah ada styling lain */
+}
+
+#nextButton:active {
+    transform: scale(0.98); /* Sedikit mengecil saat ditekan */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2); /* Bayangan lebih kecil saat ditekan */
+}
+
+/* Kelas untuk elemen yang awalnya tersembunyi dan akan muncul dengan animasi */
+.hidden {
+    opacity: 0;
+    visibility: hidden; /* Awalnya tidak terlihat dan tidak memakan tempat */
+    transform: translateY(20px); /* Mulai dari sedikit di bawah posisi akhir */
+    /* Transisi untuk opacity dan transform. Visibility diatur agar berubah setelah opacity */
+    transition: opacity 0.8s ease-out, visibility 0s 0.8s, transform 0.8s ease-out;
+}
+
+/*-----------------------------------------------------------------------------
+  FIREWORKS ANIMATION STYLES (ROCKET & PARTICLES)
+-----------------------------------------------------------------------------*/
+
+/* Styling untuk roket peluncur kembang api */
+.rocket {
+    position: absolute;
+    width: 5px; /* Lebar roket */
+    height: 20px; /* Tinggi roket */
+    /* backgroundColor dan boxShadow akan diatur oleh JavaScript untuk variasi warna */
+    border-radius: 5px 5px 0 0; /* Bagian atas roket melengkung */
+    opacity: 1; /* Awalnya terlihat jelas */
+    pointer-events: none; /* Tidak dapat diinteraksi */
+    /* Transisi untuk pergerakan (transform) dan opacity akan diatur oleh JavaScript */
+}
+
+/* Styling untuk wadah ledakan kembang api */
+.firework-explosion {
+    position: absolute;
+    pointer-events: none; /* Tidak dapat diinteraksi */
+}
+
+/* Styling untuk partikel individual dalam ledakan kembang api */
+.particle {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 8px; /* Ukuran partikel */
+    height: 8px;
+    border-radius: 50%; /* Partikel berbentuk lingkaran */
+    opacity: 0; /* Awalnya transparan, akan dianimasikan */
+    pointer-events: none; /* Tidak dapat diinteraksi */
+
+    /* Variabel CSS untuk animasi partikel, diatur oleh JavaScript */
+    --duration: 1.2s; /* Durasi default animasi partikel */
+    --delay: 0s;    /* Penundaan default animasi partikel */
+    --angle: 0rad;  /* Sudut default sebaran partikel */
+    --distance: 70px;/* Jarak default sebaran partikel */
+
+    animation-name: explodeParticleAnimation;
+    animation-timing-function: ease-out; /* Animasi melambat di akhir */
+    animation-fill-mode: forwards; /* Mempertahankan state akhir animasi */
+    animation-duration: var(--duration); /* Menggunakan variabel durasi */
+    animation-delay: var(--delay); /* Menggunakan variabel penundaan */
+}
+
+/*-----------------------------------------------------------------------------
+  KEYFRAME ANIMATIONS
+-----------------------------------------------------------------------------*/
+
+/* Animasi fade-in umum */
+@keyframes fadeInAnimation {
+    from {
+        opacity: 0;
+        transform: translateY(15px); /* Efek muncul dari bawah sedikit */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animasi untuk partikel kembang api yang meledak */
+@keyframes explodeParticleAnimation {
+    0% {
+        /* Mulai dari pusat ledakan, ukuran awal agak kecil */
+        transform: translate(0, 0) scale(0.8);
+        opacity: 1; /* Terlihat jelas saat mulai */
+    }
+    50% {
+        opacity: 0.9; /* Sedikit memudar di tengah animasi */
+    }
+    100% {
+        /* Bergerak ke arah dan jarak yang ditentukan, mengecil, dan menghilang */
+        transform:
+            rotate(var(--angle)) /* Rotasi untuk menentukan arah sebaran */
+            translateX(var(--distance)) /* Jarak sebaran dari pusat */
+            scale(0.4); /* Mengecil di akhir */
+        opacity: 0; /* Menghilang sepenuhnya */
+    }
+}
+
+/*-----------------------------------------------------------------------------
+  MEDIA QUERIES (Untuk Penyesuaian Lebih Lanjut pada Ukuran Layar Tertentu)
+-----------------------------------------------------------------------------*/
+
+/* Contoh: Untuk layar yang sangat sempit (misalnya, lebar kurang dari 380px) */
+@media (max-width: 380px) {
+    #birthdayMessage {
+        /* Mungkin perlu sedikit mengecilkan batas bawah clamp atau batas atasnya */
+        font-size: clamp(1.8rem, 7.5vw, 4rem);
+        line-height: 1.15; /* Sesuaikan line-height jika teks jadi sangat rapat */
+    }
+
+    #initialHint {
+        font-size: clamp(0.9rem, 2.8vw, 1.3rem);
+        margin-bottom: clamp(calc(var(--spacing-unit) * 2), 4vh, calc(var(--spacing-unit) * 4)); /* Kurangi margin bawah */
+    }
+
+    #nextStepMessage {
+        font-size: clamp(0.8rem, 2.2vw, 1rem);
+        margin-bottom: clamp(calc(var(--spacing-unit) * 2), 3vh, calc(var(--spacing-unit) * 3)); /* Kurangi margin bawah */
+    }
+
+    .message-container {
+        width: 95%; /* Izinkan konten mengambil lebih banyak ruang di layar sempit */
+    }
+
+    #nextButton {
+        padding: clamp(calc(var(--spacing-unit)), 1.8vh, calc(var(--spacing-unit) * 1.5))
+                 clamp(calc(var(--spacing-unit) * 1.875), 4.5vw, calc(var(--spacing-unit) * 3.125));
+        font-size: clamp(0.9rem, 2.3vw, 1.1rem);
+    }
+}
+
+/* Contoh: Untuk layar landscape pada perangkat mobile (tinggi lebih kecil) */
+@media (max-height: 500px) and (orientation: landscape) {
+    #birthdayMessage {
+        font-size: clamp(1.5rem, 6vh, 3rem); /* Gunakan vh (tinggi viewport) sebagai preferensi */
+        margin-bottom: clamp(calc(var(--spacing-unit) * 1.25), 2vh, calc(var(--spacing-unit) * 2)); /* Kurangi margin drastis */
+    }
+
+    #initialHint, #nextStepMessage {
+        margin-bottom: clamp(var(--spacing-unit), 1.5vh, calc(var(--spacing-unit) * 1.5));
+        font-size: clamp(0.8rem, 2vh, 1rem);
+    }
+    
+    .message-container {
+        padding-top: var(--spacing-unit);
+        padding-bottom: var(--spacing-unit);
+    }
+
+    #nextButton {
+        margin-top: var(--spacing-unit);
+        padding: clamp(var(--spacing-unit) * 0.75, 1.5vh, var(--spacing-unit))
+                 clamp(calc(var(--spacing-unit) * 2), 4vw, calc(var(--spacing-unit) * 3));
+        font-size: clamp(0.9rem, 2vh, 1rem);
+    }
+}

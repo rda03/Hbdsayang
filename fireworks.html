@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fireworks - Happy Birthday</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #000;
+      height: 100vh;
+    }
+    canvas {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    #birthday-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      font-family: 'Arial', sans-serif;
+      font-size: 3em;
+      color: #fff;
+      opacity: 0;
+      text-shadow: 0 0 10px #fff, 0 0 20px #f0f, 0 0 30px #f0f;
+      animation: fadeInScale 3s ease-in-out forwards 1s;
+    }
+    @keyframes fadeInScale {
+      to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+  <div id="birthday-text">Happy Birthday Tika</div>
+  <audio id="boom-sound" src="firework.mp3" preload="auto"></audio>  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const fireworkSound = document.getElementById('boom-sound');
+
+    class Firework {
+      constructor(x, y, color) {
+        this.x = x;
+        this.y = y;
+        this.color = color;
+        this.particles = [];
+        for (let i = 0; i < 100; i++) {
+          this.particles.push(new Particle(x, y, color));
+        }
+        fireworkSound.currentTime = 0;
+        fireworkSound.play();
+      }
+      update() {
+        this.particles.forEach(p => p.update());
+      }
+      draw() {
+        this.particles.forEach(p => p.draw());
+      }
+    }
+
+    class Particle {
+      constructor(x, y, color) {
+        this.x = x;
+        this.y = y;
+        this.radius = Math.random() * 2 + 1;
+        this.color = color;
+        this.angle = Math.random() * 2 * Math.PI;
+        this.speed = Math.random() * 5 + 2;
+        this.friction = 0.95;
+        this.gravity = 0.05;
+        this.alpha = 1;
+        this.dx = Math.cos(this.angle) * this.speed;
+        this.dy = Math.sin(this.angle) * this.speed;
+      }
+      update() {
+        this.dx *= this.friction;
+        this.dy *= this.friction;
+        this.dy += this.gravity;
+        this.x += this.dx;
+        this.y += this.dy;
+        this.alpha -= 0.01;
+      }
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = this.alpha;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = this.color;
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    const fireworks = [];
+    function launchFirework() {
+      const x = Math.random() * canvas.width;
+      const y = Math.random() * canvas.height / 2;
+      const colors = ['#f0f', '#fff', '#ff0', '#f8f'];
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      fireworks.push(new Firework(x, y, color));
+    }
+
+    function animate() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      fireworks.forEach((fw, index) => {
+        fw.update();
+        fw.draw();
+        if (fw.particles[0].alpha <= 0) fireworks.splice(index, 1);
+      });
+      requestAnimationFrame(animate);
+    }
+
+    // Darken background first
+    document.body.style.transition = 'background-color 2s ease';
+    document.body.style.backgroundColor = '#000022';
+
+    // Delay launch
+    setTimeout(() => {
+      setInterval(launchFirework, 800);
+      animate();
+    }, 1000);
+
+  </script></body>
+</html>

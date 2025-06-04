@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kejutan Untukmu!</title>
+    <link rel="stylesheet" href="css/opening.css">
+</head>
+<body>
+    <div class="night-sky-container">
+        <!-- Area untuk menampilkan kembang api (bisa diatur oleh JS/CSS) -->
+        <div id="fireworksContainer">
+            <!-- Contoh kembang api (bisa berupa gambar GIF atau elemen yang dianimasikan JS) -->
+            <!-- <img src="assets/images/firework1.gif" class="firework" alt="Kembang Api"> -->
+        </div>
+
+        <div class="message-container">
+            <p id="initialHint" class="fade-in-slow">Langit malam ini menyimpan sesuatu hanya untukmu...</p>
+
+            <h1 id="birthdayMessage" class="hidden elegant-text">Happy Birthday, Sayangkuuhhh</h1>
+            
+            <p id="nextStepMessage" class="hidden small-text">Mari mulai langkah kecil ini...</p>
+            <button id="nextButton" class="hidden">Lanjut</button>
+        </div>
+    </div>
+
+    <!-- Elemen Audio untuk Suara (dikontrol oleh JavaScript) -->
+    <!-- Jika backsound belum diputar dari index.html, bisa ditaruh di sini juga -->
+    <!-- <audio id="backgroundMusic" src="assets/songs/backsound.mp3" loop autoplay></audio> -->
+    <audio id="fireworkSound1" src="assets/sounds/petasan1.mp3"></audio>
+    <audio id="fireworkSound2" src="assets/sounds/petasan2.mp3"></audio>
+    <!-- Tambahkan lebih banyak elemen audio jika punya banyak suara petasan -->
+
+    <script src="js/opening.js"></script>
+</body>
+</html>

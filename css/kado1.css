@@ -1,0 +1,123 @@
+/* css/kado1.css */
+
+:root {
+    /* Anda bisa mengambil variabel warna dari game1.css jika ingin konsisten
+       atau definisikan warna baru yang lembut untuk halaman kado */
+    --kado1-bg: #f0e6ff; /* Lavender sangat pucat */
+    --kado1-text-color: #4B0082; /* Ungu tua untuk teks */
+    --kado1-frame-color: #dcd0ff; /* Warna bingkai lembut */
+    --kado1-button-bg: #9370DB; /* MediumPurple */
+    --kado1-button-hover-bg: #8A2BE2; /* BlueViolet */
+    --kado1-button-text: #FFFFFF;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'Georgia', 'Times New Roman', serif; /* Font yang lebih elegan */
+    background-color: var(--kado1-bg);
+    color: var(--kado1-text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.kado-container {
+    text-align: center;
+    padding: 30px;
+    max-width: 700px; /* Bisa lebih lebar untuk mengakomodasi foto dan teks */
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.photo-frame {
+    padding: 15px;
+    background-color: white;
+    border: 1px solid var(--kado1-frame-color);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    border-radius: 8px;
+    margin-bottom: 30px;
+    max-width: 90%; /* Agar tidak terlalu lebar di layar kecil */
+}
+
+#mainPhotoKado1 {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    max-height: 60vh; /* Batasi tinggi foto agar tidak memenuhi layar */
+    border-radius: 4px; /* Sedikit lengkungan di dalam bingkai */
+    border: 1px solid #eee; /* Border tipis di dalam bingkai */
+}
+
+.ucapan {
+    font-size: 1.5em; /* Sesuaikan ukuran font ucapan */
+    line-height: 1.6;
+    margin-bottom: 35px;
+    font-style: italic;
+    max-width: 80%;
+}
+
+#nextButtonKado1 {
+    background-color: var(--kado1-button-bg);
+    color: var(--kado1-button-text);
+    padding: 14px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+#nextButtonKado1:hover {
+    background-color: var(--kado1-button-hover-bg);
+    transform: translateY(-2px);
+}
+
+/* Efek Muncul Sederhana */
+.animated-item {
+    opacity: 0;
+    transform: translateY(20px);
+    /* Transisi akan diatur oleh JS atau langsung dengan delay berbeda */
+}
+
+/* Kelas untuk memunculkan elemen (bisa ditambahkan oleh JS) */
+.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.hidden {
+    display: none !important; /* Jika ingin disembunyikan total awalnya */
+    /* Atau jika ingin transisi dari JS:
+    opacity: 0;
+    visibility: hidden;
+    */
+}
+
+/* Media Queries untuk responsivitas dasar */
+@media (max-width: 600px) {
+    .photo-frame {
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+    #mainPhotoKado1 {
+        max-height: 50vh;
+    }
+    .ucapan {
+        font-size: 1.2em;
+        margin-bottom: 25px;
+        max-width: 95%;
+    }
+    #nextButtonKado1 {
+        padding: 12px 25px;
+        font-size: 1em;
+    }
+}
